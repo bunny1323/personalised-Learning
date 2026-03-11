@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI-Based Personalized Learning Recommendation System
 
 A modern SaaS platform that uses AI to provide tailored learning resources based on a student's unique learning style.
@@ -55,3 +56,6 @@ python database/db.py
 2. **Auth**: Register and Login with JWT security.
 3. **Quiz**: Determine if you are Visual, Auditory, Reading, or Kinesthetic.
 4. **Dashboard**: Search for any topic and get AI-explained recommendations.
+=======
+# personalised-Learning
+>>>>>>> 3aa907cbb6784255065fe87c8444d799531698a8
