@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Personalized Learning - Learn Smarter, Not Harder</title>
+    <meta name="description" content="AI-powered learning platform that adapts to your learning style. Get personalized resource recommendations from GPT-3.5.">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            background:
+                radial-gradient(circle at 80% 20%, rgba(157, 80, 187, 0.15), transparent 50%),
+                radial-gradient(circle at 10% 80%, rgba(110, 122, 255, 0.15), transparent 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .hero-pill {
+            background: var(--glass-bg);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+        }
+
+        .hero-pill span { color: #00e676; font-weight: 600; }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 16px 36px;
+            font-size: 1.05rem;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        /* Features section */
+        .features {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-purple);
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-purple);
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        /* How it works */
+        .how-it-works {
+            padding: 4rem 2rem 6rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+        }
+
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .nav-landing {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(26, 11, 46, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav-landing">
+        <div class="logo" style="font-size: 1.4rem; font-weight: 700;">
+            <i class="fas fa-brain" style="color: var(--accent-purple);"></i> AI Learn
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="login.html" class="btn-secondary" style="text-decoration: none; padding: 10px 20px;">Sign In</a>
+            <a href="register.html" class="btn-primary" style="text-decoration: none; padding: 10px 20px;">Get Started <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="animate-fade-in">
+            <div class="hero-pill">
+                <i class="fas fa-circle" style="font-size: 0.5rem; color: #00e676;"></i>
+                Powered by <span>GPT-3.5</span> &mdash; tailored to you
+            </div>
+            <h1>Learn Smarter,<br>Not Harder.</h1>
+            <p>The AI tutor that understands your unique learning style and curates the perfect resources from across the web — every time you search.</p>
+            <div class="cta-group">
+                <button onclick="window.location.href='register.html'" class="btn-primary btn-large">
+                    Start for Free <i class="fas fa-rocket"></i>
+                </button>
+                <button onclick="window.location.href='login.html'" class="btn-secondary btn-large">
+                    Sign In
+                </button>
+            </div>
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-num">4</div>
+                    <div class="stat-label">Learning Styles</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">10+</div>
+                    <div class="stat-label">Resources per Search</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">∞</div>
+                    <div class="stat-label">Topics Supported</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features -->
+    <section class="features">
+        <p class="section-label">Why AI Learn?</p>
+        <h2 class="section-title">Everything you need to learn effectively</h2>
+        <div class="features-grid">
+            <div class="glass-card feature-card animate-fade-in">
+                <div class="feature-icon" style="background: rgba(157, 80, 187, 0.15);">
+                    <i class="fas fa-brain" style="color: var(--accent-purple);"></i>
+                </div>
+                <h3>AI-Curated Recommendations</h3>
+                <p>GPT-3.5 generates 10 hand-picked resources tailored to your exact learning style — videos, articles, courses, projects and more.</p>
+            </div>
+            <div class="glass-card feature-card animate-fade-in" style="animation-delay: 0.15s;">
+                <div class="feature-icon" style="background: rgba(110, 122, 255, 0.15);">
+                    <i class="fas fa-graduation-cap" style="color: var(--accent-blue);"></i>
+                </div>
+                <h3>Learning Style Quiz</h3>
+                <p>Our 6-question VARK quiz detects whether you learn best through Videos, Audio, Reading, or Hands-on practice — and your AI adapts.</p>
+            </div>
+            <div class="glass-card feature-card animate-fade-in" style="animation-delay: 0.3s;">
+                <div class="feature-icon" style="background: rgba(0, 230, 118, 0.12);">
+                    <i class="fas fa-bookmark" style="color: #00e676;"></i>
+                </div>
+                <h3>Save &amp; Track Progress</h3>
+                <p>Bookmark your favourite resources, watch your daily learning streak grow, and keep a history of every topic you've explored.</p>
+            </div>
+            <div class="glass-card feature-card animate-fade-in" style="animation-delay: 0.1s;">
+                <div class="feature-icon" style="background: rgba(255, 167, 38, 0.12);">
+                    <i class="fas fa-fire" style="color: #ffa726;"></i>
+                </div>
+                <h3>Daily Streaks</h3>
+                <p>Build a study habit with daily login streak tracking. The platform rewards consistency and keeps you motivated to come back.</p>
+            </div>
+            <div class="glass-card feature-card animate-fade-in" style="animation-delay: 0.25s;">
+                <div class="feature-icon" style="background: rgba(38, 198, 218, 0.12);">
+                    <i class="fas fa-shield-alt" style="color: #26c6da;"></i>
+                </div>
+                <h3>Secure &amp; Private</h3>
+                <p>JWT-based authentication and bcrypt-hashed passwords. Your data stays yours — no sharing, no tracking, no ads ever.</p>
+            </div>
+            <div class="glass-card feature-card animate-fade-in" style="animation-delay: 0.4s;">
+                <div class="feature-icon" style="background: rgba(255, 112, 67, 0.12);">
+                    <i class="fas fa-search" style="color: #ff7043;"></i>
+                </div>
+                <h3>Search Anything</h3>
+                <p>From "Python decorators" to "Impressionist painting techniques" — the AI finds the best resources for any topic you can imagine.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works">
+        <p class="section-label">Simple &amp; Fast</p>
+        <h2 class="section-title">Up and running in 3 steps</h2>
+        <div class="steps">
+            <div class="glass-card step">
+                <div class="step-num">1</div>
+                <div>
+                    <h3 style="margin-bottom: 0.4rem;">Create your account</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem;">Register in seconds. No credit card, no subscription — completely free.</p>
+                </div>
+            </div>
+            <div class="glass-card step">
+                <div class="step-num">2</div>
+                <div>
+                    <h3 style="margin-bottom: 0.4rem;">Take the Learning Style Quiz</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem;">Answer 6 quick questions so the AI knows exactly how you learn best.</p>
+                </div>
+            </div>
+            <div class="glass-card step">
+                <div class="step-num">3</div>
+                <div>
+                    <h3 style="margin-bottom: 0.4rem;">Search and Learn</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem;">Type any topic and instantly get 10 AI-curated resources built around your learning style.</p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 3rem;">
+            <button onclick="window.location.href='register.html'" class="btn-primary btn-large">
+                Get Started Free <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 AI Learn Platform &mdash; Built with Flask, PostgreSQL &amp; OpenAI GPT-3.5.</p>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

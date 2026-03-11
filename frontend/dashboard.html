@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Learn</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ── Layout ── */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: sticky; top:0; height:100vh;
+            display:flex; flex-direction:column;
+            padding:1.8rem 1.4rem;
+            border-right:1px solid var(--glass-border);
+            background: rgba(15,5,29,0.6);
+            backdrop-filter:blur(20px);
+            overflow-y:auto;
+        }
+        .sidebar-logo {
+            display:flex; align-items:center; gap:10px;
+            font-size:1.15rem; font-weight:700;
+            padding:0 0.5rem; margin-bottom:2rem;
+        }
+        .sidebar-logo i { font-size:1.4rem; }
+
+        /* Avatar */
+        .avatar-section { text-align:center; padding:1.5rem 0.5rem; margin-bottom:1rem; }
+        .avatar {
+            width:72px; height:72px; border-radius:50%;
+            background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue));
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.8rem; font-weight:700; margin:0 auto 0.8rem;
+            box-shadow:0 0 0 4px rgba(168,85,247,0.2);
+        }
+        .avatar-name { font-weight:600; font-size:1rem; }
+        .avatar-style {
+            display:inline-flex; align-items:center; gap:5px;
+            background:rgba(168,85,247,0.12); color:var(--accent-purple);
+            border:1px solid rgba(168,85,247,0.2); border-radius:20px;
+            padding:3px 12px; font-size:0.75rem; font-weight:600;
+            margin-top:0.4rem;
+        }
+
+        /* Stats */
+        .stat-grid { display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem; }
+        .stat-pill {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:0.85rem 1rem;
+            background:rgba(255,255,255,0.03);
+            border:1px solid var(--glass-border);
+            border-radius:var(--radius-md);
+            font-size:0.88rem;
+        }
+        .stat-pill .stat-label { color:var(--text-secondary); display:flex;align-items:center;gap:8px; }
+        .stat-pill .stat-val { font-weight:700; font-size:1rem; }
+
+        /* Nav */
+        .nav-link {
+            display:flex; align-items:center; gap:10px;
+            padding:10px 12px; border-radius:var(--radius-sm);
+            color:var(--text-secondary); font-size:0.9rem;
+            text-decoration:none; cursor:pointer;
+            transition:var(--transition); border:none; background:none;
+            width:100%; text-align:left; font-family:inherit;
+        }
+        .nav-link:hover { background:var(--glass-bg); color:var(--text-primary); }
+        .nav-link.danger { color:#f87171; }
+        .nav-link.danger:hover { background:rgba(239,68,68,0.08); color:#fca5a5; }
+
+        /* ── Main Content ── */
+        .main { padding:2.5rem; overflow-y:auto; }
+
+        .main-header { margin-bottom:2.5rem; }
+        .main-header h1 { font-size:1.9rem; font-weight:800; }
+        .main-header p { color:var(--text-secondary); margin-top:0.2rem; }
+
+        /* Search */
+        .search-box {
+            display:flex; gap:0.75rem;
+            background:var(--glass-bg);
+            border:1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding:0.5rem 0.5rem 0.5rem 1.2rem;
+            transition:var(--transition);
+            max-width:700px;
+        }
+        .search-box:focus-within {
+            border-color:rgba(168,85,247,0.5);
+            box-shadow:0 0 0 3px rgba(168,85,247,0.1);
+        }
+        .search-box input {
+            flex:1; background:none; border:none; outline:none;
+            color:var(--text-primary); font-size:1rem; font-family:inherit;
+        }
+        .search-box input::placeholder { color:var(--text-muted); }
+        .search-btn {
+            background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue));
+            border:none; border-radius:var(--radius-md);
+            color:white; padding:10px 20px; cursor:pointer;
+            font-weight:600; font-size:0.9rem; font-family:inherit;
+            display:flex; align-items:center; gap:8px;
+            transition:var(--transition);
+        }
+        .search-btn:hover { opacity:0.9; transform:scale(1.02); }
+
+        /* Section titles */
+        .section-head {
+            display:flex; align-items:center; justify-content:space-between;
+            margin-bottom:1.5rem; margin-top:2.5rem;
+        }
+        .section-head h2 { font-size:1.2rem; font-weight:700; display:flex;align-items:center;gap:10px; }
+
+        /* Cards grid */
+        .resource-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(295px,1fr));
+            gap:1.25rem;
+        }
+        .resource-card {
+            padding:1.4rem; display:flex; flex-direction:column; gap:0.9rem;
+            cursor:default;
+            transition:transform 0.25s ease, border-color 0.25s ease;
+        }
+        .resource-card:hover { transform:translateY(-4px); border-color:rgba(168,85,247,0.3); }
+        .card-top { display:flex; justify-content:space-between; align-items:center; }
+        .card-platform { font-size:0.75rem; color:var(--text-muted); }
+        .card-title { font-size:1rem; font-weight:600; line-height:1.4; }
+        .card-desc { font-size:0.84rem; color:var(--text-secondary); line-height:1.6; flex-grow:1; }
+        .card-reason {
+            background:rgba(168,85,247,0.07);
+            border-left:3px solid var(--accent-purple);
+            padding:8px 12px; border-radius:0 8px 8px 0;
+            font-size:0.8rem; color:var(--text-secondary); line-height:1.5;
+        }
+        .card-actions { display:flex; gap:8px; margin-top:2px; }
+        .card-actions .btn-primary { flex:1; justify-content:center; padding:9px 14px; font-size:0.85rem; }
+        .card-actions .btn-icon { flex-shrink:0; }
+
+        /* Loading overlay */
+        #loadingOverlay {
+            position:fixed; inset:0;
+            background:rgba(10,4,22,0.85);
+            display:none; flex-direction:column;
+            align-items:center; justify-content:center; gap:1.2rem;
+            z-index:9999; backdrop-filter:blur(6px);
+        }
+        .spinner-ring {
+            width:52px; height:52px;
+            border:3px solid rgba(168,85,247,0.2);
+            border-top-color:var(--accent-purple);
+            border-radius:50%;
+            animation:spin 0.8s linear infinite;
+        }
+        #loadingOverlay p { color:var(--text-secondary); font-size:0.9rem; }
+
+        /* Empty state */
+        .empty-state {
+            grid-column:1/-1; text-align:center; padding:4rem 2rem;
+            color:var(--text-muted);
+        }
+        .empty-state i { font-size:2.5rem; opacity:0.25; margin-bottom:1rem; display:block; }
+        .empty-state p { font-size:0.95rem; }
+        .empty-state small { font-size:0.82rem; margin-top:0.3rem; display:block; }
+
+        /* Toast */
+        #toast {
+            position:fixed; bottom:2rem; right:2rem; z-index:99999;
+            padding:12px 20px; border-radius:var(--radius-md);
+            font-weight:600; font-size:0.88rem;
+            box-shadow:0 8px 30px rgba(0,0,0,0.4);
+            display:none; align-items:center; gap:10px;
+            animation:fadeInUp 0.3s ease;
+            max-width:320px;
+        }
+
+        /* Light mode */
+        body.light-mode {
+            --bg-gradient:linear-gradient(135deg,#f5f0ff 0%,#eef2ff 50%,#f0f9ff 100%);
+            --text-primary:#1e1033;
+            --text-secondary:#6b5f7d;
+            --text-muted:#9ca3af;
+            --glass-bg:rgba(255,255,255,0.7);
+            --glass-bg-hover:rgba(255,255,255,0.9);
+            --glass-border:rgba(0,0,0,0.07);
+        }
+        body.light-mode .sidebar { background:rgba(245,240,255,0.8); }
+
+        @media(max-width:900px) {
+            .app-layout { grid-template-columns:1fr; }
+            .sidebar { position:static; height:auto; flex-direction:row; flex-wrap:wrap; }
+            .avatar-section { display:none; }
+        }
+    </style>
+</head>
+<body>
+<div id="loadingOverlay">
+    <div class="spinner-ring"></div>
+    <p>Generating personalised resources with AI...</p>
+</div>
+
+<div id="toast"></div>
+
+<div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-brain gradient-text"></i>
+            AI Learn
+        </div>
+
+        <div class="avatar-section">
+            <div class="avatar" id="userAvatar">U</div>
+            <div class="avatar-name" id="userName">Loading...</div>
+            <div class="avatar-style"><i class="fas fa-star"></i><span id="userStyle">—</span></div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-pill">
+                <span class="stat-label"><i class="fas fa-fire" style="color:#f97316;"></i> Streak</span>
+                <span class="stat-val" id="streakCount">—</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-label"><i class="fas fa-history" style="color:var(--accent-blue);"></i> Topics</span>
+                <span class="stat-val" id="topicCount">0</span>
+            </div>
+            <div class="stat-pill">
+                <span class="stat-label"><i class="fas fa-bookmark" style="color:var(--accent-purple);"></i> Saved</span>
+                <span class="stat-val" id="savedCount">0</span>
+            </div>
+        </div>
+
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:4px; padding-top:1rem; border-top:1px solid var(--glass-border);">
+            <button class="nav-link" id="themeToggle">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+            <button class="nav-link danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+        <div class="main-header animate-fade-in">
+            <h1>What will you learn <span class="gradient-text">today?</span></h1>
+            <p>Enter any topic and AI will find the best resources for your learning style.</p>
+        </div>
+
+        <div class="search-box animate-fade-in-2">
+            <input type="text" id="topicInput" placeholder="e.g. Machine Learning, React Hooks, Watercolour Painting…">
+            <button class="search-btn" onclick="handleSearch()">
+                <i class="fas fa-magic"></i> Discover
+            </button>
+        </div>
+
+        <!-- Recommendations -->
+        <section id="recsSection" style="display:none;">
+            <div class="section-head">
+                <h2><i class="fas fa-sparkles gradient-text"></i><span id="recsHeading">Recommendations</span></h2>
+                <span style="font-size:0.8rem;color:var(--text-muted);" id="recsCount"></span>
+            </div>
+            <div class="resource-grid" id="recsGrid"></div>
+        </section>
+
+        <!-- Saved Resources -->
+        <section id="savedSection">
+            <div class="section-head">
+                <h2><i class="fas fa-bookmark" style="color:var(--accent-purple);"></i> Saved Resources</h2>
+            </div>
+            <div class="resource-grid" id="savedGrid">
+                <div class="empty-state">
+                    <i class="fas fa-bookmark"></i>
+                    <p>Nothing saved yet</p>
+                    <small>Search a topic above and bookmark your favourites</small>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
