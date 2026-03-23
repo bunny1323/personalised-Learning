@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # AI-Based Personalized Learning Recommendation System
 
 A modern SaaS platform that uses AI to provide tailored learning resources based on a student's unique learning style.
